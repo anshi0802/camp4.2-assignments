@@ -1,0 +1,145 @@
+a)Append a text to the existing text in a file. Other files should be  
+able to interact with this file only in the Read Mode while your 
+application is interacting with the file.
+
+
+
+
+
+
+
+string file_path = @"C:\\Users\\User\\Desktop\\myFile1.txt";
+
+
+//create a file
+FileStream fs = File.Create(file_path);
+
+//close it else error will occure
+fs.Close();// if not close immediately the file can several issues like File Locking,Resource Leak
+
+
+//check whether file is exist or not
+if (File.Exists(file_path))
+{
+    //Write the content to the file
+    //String[] arr = {"This is the", "Content" , "to Write"};
+    //OR
+    string[] arr = { "My Favourite Fruits Are : ", "Cherry", "Guva", "Mango", "Pappaya", "Watermelon" };
+    File.WriteAllLines(file_path, arr);
+
+    //reading the data frpm the file
+    Console.WriteLine("File Created and Reading The Data");
+    string file_content = File.ReadAllText(file_path);
+    Console.WriteLine(file_content);
+    string substring = file_content.Substring(2, 5);
+
+
+b)Retrieve five characters starting from the third character and 
+display it in a console
+
+
+
+
+
+
+    Console.WriteLine("Retrieved characters:");
+    Console.WriteLine(substring);
+
+    Console.Write("Enter destination file path : ");
+    string destinationFilePath = Console.ReadLine();
+
+
+    try
+    {
+        // Check if source file exists
+        if (File.Exists(file_path))
+        {
+            // Copy file
+            File.Copy(file_path, destinationFilePath);
+
+            Console.WriteLine("File copied successfully.");
+        }
+        else
+        {
+            Console.WriteLine("Source file not found.");
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Error: " + ex.Message);
+    }
+
+
+}
+else
+{
+    Console.WriteLine("File Cannot Exist");
+}
+Console.ReadKey();
+
+*/
+
+--------------------------------------------------------------
+
+Copy a file to another destination specified by the user.
+
+
+
+
+using System;
+
+string file_path = @"C:\\Users\\User\\Desktop\\myFile1.txt";
+//create a file
+FileStream fs = File.Create(file_path);
+
+//close it else error will occure
+fs.Close();// if not close immediately the file can several issues like File Locking,Resource Leak
+
+
+//check whether file is exist or not
+if (File.Exists(file_path))
+{
+  
+    string[] arr = { "My Favourite Fruits Are : ", "*Apple", "*ORANGE", "*Banana", "*Pappaya", "*Watermelon" };
+    File.WriteAllLines(file_path, arr);
+
+    //reading the data frpm the file
+    Console.WriteLine("File Created and Reading The Data");
+    string file_content = File.ReadAllText(file_path);
+    Console.WriteLine(file_content);
+    string substring = file_content.Substring(2, 5);
+
+    Console.WriteLine("Retrieved characters:");
+    Console.WriteLine(substring);
+
+    Console.Write("Enter destination file path : ");
+    string destinationFilePath = Console.ReadLine();
+
+
+
+
+    if (File.Exists(file_path))
+    {
+
+        File.Copy(file_path, destinationFilePath);
+
+        Console.WriteLine("File copied successfully.");
+
+
+        File.Copy(file_path, destinationFilePath, overwrite: true);
+        Console.WriteLine("File copied successfully.");
+        Console.Write("Enter text to append to the file: ");
+        string userInput = Console.ReadLine();
+
+
+        File.AppendAllText(file_path, userInput);
+
+    }
+}
+else
+{
+    Console.WriteLine("Source file not found.");
+}
+
+
+Console.ReadKey();
